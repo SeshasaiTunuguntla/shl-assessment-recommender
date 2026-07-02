@@ -8,11 +8,10 @@ import os
 import json
 from typing import List, Dict, Any, Optional
 from openai import OpenAI
-import anthropic
 
 from .prompts import build_system_message, get_few_shot_examples, should_refuse
 from .conversation_manager import ConversationManager, ConversationState
-from ..retrieval.vector_store import AssessmentRetriever
+from ..retrieval import AssessmentRetriever
 
 
 class AssessmentAgent:
@@ -39,19 +38,14 @@ class AssessmentAgent:
         # Initialize LLM client
         if llm_provider == "openai":
             self.client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
-        elif llm_provider == "anthropic":
-            self.client = anthropic.Anthropic(api_key=os.getenv("ANTHROPIC_API_KEY"))
         elif llm_provider == "groq":
             # Groq uses OpenAI-compatible API
             self.client = OpenAI(
                 api_key=os.getenv("GROQ_API_KEY"),
                 base_url="https://api.groq.com/openai/v1"
             )
-        elif llm_provider == "gemini":
-            # For future Gemini support
-            raise ValueError("Gemini provider not yet implemented. Use 'openai' or 'groq'")
         else:
-            raise ValueError(f"Unsupported LLM provider: {llm_provider}")
+            raise ValueError(f"Unsupported LLM provider: {llm_provider}. Use 'openai' or 'groq'")
         
         self.system_message = build_system_message()
         
@@ -277,32 +271,14 @@ Base your answer ONLY on the catalog data provided. Be specific and helpful."""
     
     def _call_llm(self, messages: List[Dict[str, str]]) -> str:
         """Call LLM and return response text."""
-        if self.llm_provider in ["openai", "groq"]:
-            # Both OpenAI and Groq use the same API format
-            response = self.client.chat.completions.create(
-                model=self.model,
-                messages=messages,
-                temperature=0.7,
-                max_tokens=800
-            )
-            return response.choices[0].message.content
-        
-        elif self.llm_provider == "anthropic":
-            # Anthropic uses different message format
-            system = next((m['content'] for m in messages if m['role'] == 'system'), None)
-            conversation_messages = [m for m in messages if m['role'] != 'system']
-            
-            response = self.client.messages.create(
-                model=self.model,
-                system=system,
-                messages=conversation_messages,
-                temperature=0.7,
-                max_tokens=800
-            )
-            return response.content[0].text
-        
-        else:
-            raise ValueError(f"Unsupported LLM provider: {self.llm_provider}")
+        # Both OpenAI and Groq use the same API format
+        response = self.client.chat.completions.create(
+            model=self.model,
+            messages=messages,
+            temperature=0.7,
+            max_tokens=800
+        )
+        return response.choices[0].message.content
     
     def _format_results_for_prompt(self, results: List[Dict[str, Any]]) -> str:
         """Format search results for inclusion in prompt."""
