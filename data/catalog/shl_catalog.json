@@ -1,0 +1,42 @@
+[
+  {
+    "name": "Java 8 (New)",
+    "url": "https://www.shl.com/solutions/products/java-8/",
+    "description": "Technical assessment for Java 8 programming knowledge and best practices",
+    "test_type": "K",
+    "category": "Programming",
+    "duration": "45 min"
+  },
+  {
+    "name": "OPQ32r",
+    "url": "https://www.shl.com/solutions/products/opq32r/",
+    "description": "Occupational personality questionnaire measuring 32 personality traits",
+    "test_type": "P",
+    "category": "Personality",
+    "duration": "25 min"
+  },
+  {
+    "name": "Verify G+",
+    "url": "https://www.shl.com/solutions/products/verify-g-plus/",
+    "description": "General cognitive ability assessment for problem-solving",
+    "test_type": "A",
+    "category": "Cognitive",
+    "duration": "30 min"
+  },
+  {
+    "name": "Situational Judgment Test",
+    "url": "https://www.shl.com/solutions/products/sjt/",
+    "description": "Decision-making scenarios for workplace situations",
+    "test_type": "S",
+    "category": "Situational",
+    "duration": "20 min"
+  },
+  {
+    "name": "Python 3 Programming",
+    "url": "https://www.shl.com/solutions/products/python-3/",
+    "description": "Python programming skills assessment",
+    "test_type": "K",
+    "category": "Programming",
+    "duration": "45 min"
+  }
+]
