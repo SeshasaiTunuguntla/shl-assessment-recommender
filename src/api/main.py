@@ -12,7 +12,7 @@ from pydantic import BaseModel, Field
 from dotenv import load_dotenv
 
 from ..agent.agent import AssessmentAgent
-from ..retrieval.vector_store import AssessmentRetriever
+from ..retrieval import AssessmentRetriever
 
 # Load environment variables
 load_dotenv()
