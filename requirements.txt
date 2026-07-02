@@ -16,8 +16,8 @@ anthropic==0.18.0
 tiktoken==0.5.2
 
 # Vector search and embeddings
-sentence-transformers==2.3.1
-faiss-cpu==1.7.4
+sentence-transformers==2.5.1
+faiss-cpu==1.8.0
 numpy==1.26.3
 
 # Data processing
